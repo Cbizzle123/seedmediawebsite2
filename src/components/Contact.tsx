@@ -19,7 +19,7 @@ const Contact = () => {
       const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
       const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-      const apiUrl = `${supabaseUrl}/functions/v1/send-contact-email`;
+      const apiUrl = `${supabaseUrl}/functions/v1/submit-contact`;
 
       const response = await fetch(apiUrl, {
         method: 'POST',
