@@ -56,13 +56,20 @@ ${message}
       }),
     });
 
+    const emailText = await emailResponse.text();
+
     if (!emailResponse.ok) {
-      const errorData = await emailResponse.text();
-      console.error('Resend API error:', errorData);
-      throw new Error(`Failed to send email: ${errorData}`);
+      console.error('Resend API error:', emailText);
+      throw new Error(`Failed to send email: ${emailText}`);
     }
 
-    const emailData = await emailResponse.json();
+    let emailData;
+    try {
+      emailData = JSON.parse(emailText);
+    } catch (parseError) {
+      console.error('Failed to parse email response:', emailText);
+      throw new Error('Invalid response from email service');
+    }
 
     return new Response(
       JSON.stringify({ success: true, message: 'Email sent successfully', data: emailData }),
